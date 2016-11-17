@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package marsrover;
 
 import java.io.BufferedReader;
@@ -20,20 +16,25 @@ public class MarsRover {
      * @param args the command line arguments
      */
      public static void main(String[] args) throws IOException {
-        boolean test = true;
+        
+        boolean test = true;//Testa se o movimento é válido
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String linha;
-        String x;
-        String y;
-        String orientacao;
-        String mat = br.readLine();
+        String linha;//Receberá a string de entrada
+        String x;//Posição X onde o rover irá iniciar
+        String y;//Posição Y onde o rover irá iniciar
+        String orientacao;//Orientação inicial do rover
+        String mat = br.readLine();//Variável com o valor dos limites da matriz
         String[] linhaDoArquivo = mat.split(" ");
+        //Posição Superior Direita do tablo
         String xMax = linhaDoArquivo[0];
         String yMax = linhaDoArquivo[1];
+        //Criação do rover inicial sem posição
         Rover r = new Rover(0, 0, 'N', parseInt(xMax), parseInt(yMax));
-        int tamanho = 0;
+        int tamanho = 0;//Variável que controlará se a entrada é um rover ou um comando para o rover
+        //Aqui iniciamos o loop de entradas para o teste dos rovers
         while ((linha = br.readLine()) != null) {
             test = true;
+            //Se a variável tamanho for par a entrada será um rover, caso não seja a entrada será um comando
             if (tamanho % 2 == 0) {
                 String[] arq = linha.split(" ");
                 x = arq[0];
@@ -41,7 +42,7 @@ public class MarsRover {
                 orientacao = arq[2];
                 Rover r1 = new Rover(parseInt(x), parseInt(y), orientacao.charAt(0), parseInt(xMax), parseInt(yMax));
                 r = r1;
-            } else {
+            }else {
                 for (int j = 0; j < linha.length(); j++) {
                     switch (linha.charAt(j)) {
                         case 'L':
@@ -51,6 +52,7 @@ public class MarsRover {
                             r.R();
                             break;
                         case 'M':
+                            //Testa se o movimento é válido
                             if (!(r.M())) {
                                 test = false;
                                 System.out.printf("Posição inválida\n");
